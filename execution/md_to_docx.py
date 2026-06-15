@@ -206,10 +206,9 @@ def main() -> None:
     RESULT_DIR.mkdir(exist_ok=True)
     print(f"Результаты: {RESULT_DIR}")
 
-    # 1) Программа курса
-    program = COURSE_DIR / "00_Программа_курса.md"
-    if program.exists():
-        convert_file(program, RESULT_DIR / "00_Программа_курса.docx")
+    # 1) Корневые документы (программа, литература, курсовой проект, вопросы)
+    for md in sorted(COURSE_DIR.glob("*.md")):
+        convert_file(md, RESULT_DIR / f"{md.stem}.docx")
 
     # 2) Лекции и лабораторные по папкам
     folders = sorted(p for p in COURSE_DIR.iterdir() if p.is_dir())
